@@ -25,5 +25,7 @@ jobs:
         run: pnpm run test
       - name: Build project
         run: pnpm run build
-      - name: Run end 2 end tests
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: e2e tests
         run: pnpm run test:e2e
