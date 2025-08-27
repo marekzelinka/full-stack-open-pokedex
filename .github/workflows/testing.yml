@@ -25,4 +25,7 @@ jobs:
           echo ${{  github.event.commits.*.message }}
           echo ${{  contains(github.event.commits.*.message, '#skip') }}
       - name: secrets
-        run: echo ${{ toJson(secrets) }}
+        run: |
+          echo ${{ secrets.DISCORD_WEBHOOK }}
+          echo ${{ secrets.FLY_API_TOKEN }}
+          echo ${{ secrets.GITHUB_TOKEN }}
