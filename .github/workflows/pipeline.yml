@@ -31,12 +31,28 @@ jobs:
           npx playwright install --with-deps
           pnpm run test:e2e
       - name: Build project
+        id: build
         run: pnpm run build
+      - name: Build failure notification
+        uses: rjstone/discord-webhook-notify@v2
+        if: ${{ failure() && steps.build.conclusion == 'failure' }}
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: error
+          details: Failed to build, latest commit - ${{ github.event.head_commit.id }}
       - name: Deploy project
+        id: deploy
         if: ${{ env.SHOULD_SKIP == false }}
         run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Deploy success notification
+        uses: rjstone/discord-webhook-notify@v2
+        if: ${{ success() && steps.deploy.conclusion == 'success' }}
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: info
+          details: Deployment to Fly is successful
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
