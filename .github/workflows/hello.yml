@@ -1,11 +1,8 @@
 name: Hello World!
-description: Prints "Hello World!" when someone pushes to the main branch
-
 on: 
   push: 
     branches: 
       - main
-
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
