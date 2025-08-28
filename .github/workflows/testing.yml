@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  SHOULD_SKIP: ${{ contains(join(github.event.commits.*.message, ', '), '#skip') }}
+
 jobs:
   a_test_job:
     runs-on: ubuntu-latest
@@ -29,4 +32,4 @@ jobs:
       - name: should skip
         run: |
           echo ${{  github.event.commits.*.message }}
-          echo ${{  contains(join(github.event.commits.*.message, ', '), '#skip') }}
+          echo ${{  env.SHOULD_SKIP }}
