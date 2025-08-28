@@ -6,8 +6,6 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize]
-env:
-  SHOULD_SKIP: ${{ contains(join(github.event.commits.*.message, ' '), '#skip') }}
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-latest
