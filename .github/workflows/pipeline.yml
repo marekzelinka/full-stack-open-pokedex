@@ -34,7 +34,7 @@ jobs:
         id: build
         run: pnpm run build
       - name: Build failure notification
-        uses: Ilshidur/action-discord@master
+        uses: Ilshidur/action-discord@ad5235de713df3ef38022185499b02ffe93b7efe
         if: ${{ failure() && steps.build.conclusion == 'failure' }}
         with:
           args: |
@@ -50,7 +50,7 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - name: Deploy success notification
-        uses: Ilshidur/action-discord@master
+        uses: Ilshidur/action-discord@ad5235de713df3ef38022185499b02ffe93b7efe
         if: ${{ success() && steps.deploy.conclusion == 'success' }}
         with:
           args: |
