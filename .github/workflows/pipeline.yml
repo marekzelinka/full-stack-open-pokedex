@@ -34,13 +34,11 @@ jobs:
         id: build
         run: pnpm run build
       - name: Build failure notification
-        uses: rjstone/discord-webhook-notify@v2
+        uses: Ilshidur/action-discord@master
         if: ${{ failure() && steps.build.conclusion == 'failure' }}
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: error
-          details: |
-            Failed to build
+          args: |
+            Build failed!
             Commit : ${{ github.sha }}
             By : ${{ github.actor }}
         env:
@@ -52,12 +50,13 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - name: Deploy success notification
-        uses: rjstone/discord-webhook-notify@v2
+        uses: Ilshidur/action-discord@master
         if: ${{ success() && steps.deploy.conclusion == 'success' }}
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: info
-          details: Deployment to Fly is successful
+          args: |
+            Build failed!
+            Commit : ${{ github.sha }}
+            By : ${{ github.actor }}
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
