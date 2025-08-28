@@ -38,7 +38,7 @@ jobs:
         if: ${{ failure() && steps.build.conclusion == 'failure' }}
         with:
           args: |
-            Build failed!
+            Failed to build!
             Commit : ${{ github.sha }}
             By : ${{ github.actor }}
         env:
@@ -54,9 +54,7 @@ jobs:
         if: ${{ success() && steps.deploy.conclusion == 'success' }}
         with:
           args: |
-            Build failed!
-            Commit : ${{ github.sha }}
-            By : ${{ github.actor }}
+            Deployment to Fly is successful
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
